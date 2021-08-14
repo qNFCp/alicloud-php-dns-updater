@@ -96,6 +96,7 @@ class AlicloudUpdateRecord
             'Action' => 'DescribeDomainRecords',
             'DomainName' => $this->domainName,
             'Format' => 'json',
+            'RRKeyWord' => $this->rR,
             'SignatureMethod' => 'HMAC-SHA1',
             'SignatureNonce' => random_int(1000000000, 9999999999),
             'SignatureVersion' => '1.0',
