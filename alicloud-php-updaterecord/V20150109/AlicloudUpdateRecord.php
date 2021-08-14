@@ -203,7 +203,7 @@ class AlicloudUpdateRecord
             'SignatureVersion' => '1.0',
             'Timestamp' => $this->getDate(),
             'Type' => $this->type,
-            'Value' => $this->value,
+            'Value' => urlencode($this->value),
             'Version' => '2015-01-09'
         ];
 
