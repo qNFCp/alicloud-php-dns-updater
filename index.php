@@ -6,6 +6,10 @@ include_once 'alicloud-php-updaterecord/V20150109/AlicloudUpdateRecord.php';
 
 use Roura\Alicloud\V20150109\AlicloudUpdateRecord;
 
+if(isset($_GET["ip"])){
+     $ip=$_GET["ip"];
+}
+
 //HTTP GET
 function get_url($url)
 {
@@ -27,6 +31,9 @@ $updater         = new AlicloudUpdateRecord($AccessKeyId, $AccessKeySecret);
 //$newIp = $_SERVER['REMOTE_ADDR']; // Upload client IP address
 $newIp = get_url('https://v6.ipv6-test.com/api/myip.php'); // Upload server-side IPv6 address
 //$newIp = get_url('https://v4.ipv6-test.com/api/myip.php'); // Upload server-side IPv4 address
+if(isset($ip)){    //If is set IP in URL, Use it to update
+    $newIp = $ip;
+}
 
 $updater->setDomainName('DOMAIN.COM');
 //$updater->setRecordType('A');
