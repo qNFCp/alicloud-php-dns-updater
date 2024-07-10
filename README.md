@@ -18,8 +18,11 @@
 
   访问的链接中有IP参数时，使用其进行更新。
   使用场景可为：
+  
   A：拥有IPv4（非公网）+IPv6（公网）
+  
   B（服务端）：拥有IPv4（公网）
+  
   此时A可通过Shell脚本调用ipv6-test的API获取IPv6公网IP，并将其加入链接参数，发送至B。由B将A的IPv6地址发送给阿里云进行更新操作。
   
   供参考使用的Shell脚本见末尾。
@@ -46,9 +49,13 @@ Default is Method 3 (priority, upload IP parameter in HTTP Get request) + Method
 + Method 3 (uploading IP parameters from HTTP Get requests):
 
   Use the IP value of the links visited when they have it in them for updating.
+  
   The usage scenarios can be:
+  
   A: IPv4 (non-public network) + IPv6 (public network)
+  
   B (server side): IPv4 (public network).
+  
   At this point, A can call the API of ipv6-test.com via shell script to get the IPv6 public IP, and add it to the link parameter, then send it to B. B will send A's IPv6 address to Aliyun for update operation.
 
 
@@ -60,6 +67,10 @@ Default is Method 3 (priority, upload IP parameter in HTTP Get request) + Method
 
 # Function to get IPv6 address
 get_ipv6_address() {
+    # Use the local network interface IPv6 Address
+    # ipv6=$(ip -6 addr show scope global | grep -oP '(?<=inet6\s)[\da-f:]+') 
+
+    # Use third party API to get IPv6 Address
     ipv6=$(curl -s http://v6.ipv6-test.com/api/myip.php)
     echo "$ipv6"
 }
@@ -69,7 +80,9 @@ main() {
     ipv6=$(get_ipv6_address)
     if [ -n "$ipv6" ]; then
         curl "http://domain/index.php?ip=$ipv6"
-        # curl -u qnfcp:vei4h1fiqe0jfpva "http://domain/index.php?ip=$ipv6" #If the website has password
+
+        # If the website has password
+        # curl -u qnfcp:vei4h1fiqe0jfpva "http://domain/index.php?ip=$ipv6" 
     else
         echo "Failed to retrieve IPv6 address."
         exit 1
